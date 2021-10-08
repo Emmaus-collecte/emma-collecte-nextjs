@@ -3,24 +3,9 @@ import { ApolloClient, InMemoryCache } from '@apollo/client'
 
 let apolloClient
 
-function createIsomorphLink() {
-  if (typeof window === 'undefined') {
-    const { SchemaLink } = require('@apollo/client/link/schema')
-    const { schema } = require('./schema')
-    return new SchemaLink({ schema })
-  } else {
-    const { HttpLink } = require('@apollo/client/link/http')
-    return new HttpLink({
-      uri: '/api/graphql',
-      credentials: 'same-origin',
-    })
-  }
-}
-
 function createApolloClient() {
   return new ApolloClient({
-    ssrMode: typeof window === 'undefined',
-    link: createIsomorphLink(),
+    uri: 'http://localhost:3000/api/graphql',
     cache: new InMemoryCache(),
   })
 }
