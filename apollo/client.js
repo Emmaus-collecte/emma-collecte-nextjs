@@ -27,6 +27,5 @@ export function initializeApollo(initialState = null) {
 }
 
 export function useApollo(initialState) {
-  const store = useMemo(() => initializeApollo(initialState), [initialState])
-  return store
+  return useMemo(() => initializeApollo(initialState), [initialState])
 }
