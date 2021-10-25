@@ -1,0 +1,38 @@
+import React from 'react'
+import { CartModel } from '../../../models/cart.model'
+import Toaster from '../../../public/illustrations/Toaster02.png'
+import TrashIcon from '../../../public/icons/trash.svg'
+import Image from 'next/image'
+
+interface CartItemProps {
+  item: CartModel
+}
+const CartItem = ({ item }: CartItemProps) => {
+  const handleDelete = () => {
+    console.log('delte', item)
+  }
+  return (
+    <>
+      <div className="grid cols-3 p-2 m-4 rounded-2xl bg-light-secondary font-light relative">
+        <div className="col-start-1 w-3/4">
+          <Image src={Toaster} alt="toaster" />
+        </div>
+        <div className="col-start-2">
+          <p className="font-bold">{item.name}</p>
+          <p>Qualité : {item.quality}</p>
+          <p>Option : {item.options.name}</p>
+          <p>Quantité : {item.quantity}</p>
+        </div>
+        <button
+          type="button"
+          className="bg-ternary rounded-full w-8 h-8 absolute -top-1 -left-1 flex justify-center items-center"
+          onClick={handleDelete}
+        >
+          <TrashIcon className="fill-current text-white" />
+        </button>
+      </div>
+    </>
+  )
+}
+
+export default CartItem

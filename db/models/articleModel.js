@@ -19,10 +19,20 @@ const ArticlesSchema = new Schema({
         type: String,
         trim: true,
     },
-    drive: {
+    isCollection: {
         type: Boolean,
         required: true,
     },
+    options: [{
+        name: {
+            type: String,
+            required: true,
+        },
+        quantity: {
+            type: Number,
+            required: true
+        },
+    }],
     createAt: {
         type: Date,
         defalut: Date.now(),

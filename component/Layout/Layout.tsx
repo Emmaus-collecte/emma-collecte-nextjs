@@ -16,7 +16,7 @@ const Layout = ({children}: LayoutProps) => {
         {
             name:'Collecte',
             icon: <CollectionIcon className='fill-current'/>,
-            href:'/forms/collection/articles'
+            href:'/forms/collection'
         },
         {
             name:'Depot',

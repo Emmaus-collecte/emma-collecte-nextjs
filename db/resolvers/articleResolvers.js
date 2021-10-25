@@ -5,9 +5,7 @@ const articleResolvers = {
         // articles
         getArticles: async () => {
             try {
-                const articles = await Article.find({})
-
-                return articles
+                return await Article.find({})
             } catch (err) {
                 console.log(err)
             }
@@ -29,9 +27,7 @@ const articleResolvers = {
             try {
                 const article = new Article(input)
 
-                const result = await article.save()
-
-                return result
+                return await article.save()
             } catch (err) {
                 console.log(err)
             }

@@ -2,19 +2,34 @@ import { gql } from 'apollo-server-micro'
 
 const articleTypeDefs = gql`
   # Articles
+  
+  type Options {
+    name: String
+    quantity: Int
+  }
+  
+  
   type Article {
     id: ID
     name: String
     price: Float
     description: String
-    drive : Boolean
+    isCollection : Boolean
+    options : [Options]
+  }
+
+  input OptionsInput {
+    name: String
+    quantity: Int
   }
 
   input ArticleInput {
     name: String!
     price: Float!
     description: String
-    drive : Boolean!
+    isCollection : Boolean!
+    options : [OptionsInput!]!
+
   }
 
   type Query {
