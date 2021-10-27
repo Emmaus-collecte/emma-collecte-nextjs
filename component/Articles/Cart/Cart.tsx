@@ -10,7 +10,7 @@ interface CartProps {
 }
 
 const Cart = ({ isCartOpen, closeCart }: CartProps) => {
-  const cart = useStore((state) => state.cart)
+  const { cart, points } = useStore()
 
   return (
     <div
@@ -29,7 +29,7 @@ const Cart = ({ isCartOpen, closeCart }: CartProps) => {
 
         <div className="col-start-2 flex">
           <div className="bg-ternary text-white w-full flex p-4 rounded-3xl mx-4 justify-around">
-            5/30
+            {points}/30
             <ShoppingIcon className="fill-current" />
           </div>
         </div>

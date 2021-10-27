@@ -6,6 +6,7 @@ import BackArrowIcon from '../../../../public/icons/backArrow.svg'
 import SideBarArticleDetails from '../../../../component/Articles/SideBarArticleDetails'
 import Toaster from '../../../../public/illustrations/Toaster02.png'
 import Image from 'next/image'
+import BackButton from '../../../../component/common/BackButton'
 export async function getServerSideProps(context: any) {
   const apolloClient = initializeApollo()
   const { data } = await apolloClient.query({
@@ -44,12 +45,7 @@ const ArticleDetails = ({ article }: ArticleDetailsProps) => {
     <div className="grid grid-cols-4 h-full">
       <div className="col-start-1 col-end-4">
         {/*Back Button*/}
-        <button type="button" className="flex items-center">
-          <div className="bg-ternary w-20 h-8 rounded-lg text-white flex justify-center items-center mr-4">
-            <BackArrowIcon className="fill-current" />
-          </div>
-          <p className="font-bold">Retour aux produits</p>
-        </button>
+        <BackButton name="Retour aux articles" href="/forms/collection" />
         {/*Content*/}
         <div>
           <div className="bg-light-secondary rounded-lg p-20 w-3/4 my-6">
