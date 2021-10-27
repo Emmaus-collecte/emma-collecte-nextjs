@@ -10,6 +10,7 @@
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "apollo-server-micro": "^2.14.2",
     "eslint-config-prettier": "^8.3.0",
+    "formik": "^2.2.9",
     "graphql": "^14.0.2",
     "graphql-tools": "^4.0.8",
     "mongoose": "^6.0.6",
@@ -21,6 +22,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "simple-zustand-devtools": "^1.0.1",
+    "yup": "^0.32.11",
     "zustand": "^3.5.12"
   },
   "devDependencies": {

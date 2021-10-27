@@ -4,7 +4,7 @@ import ArticleList from '../../../component/Articles/ArticleList'
 import ShoppingIcon from '../../../public/icons/shopping.svg'
 import useStore from '../../../lib/store/useStore'
 import { ArticleModel } from '../../../models/article.model'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Cart from '../../../component/Articles/Cart/Cart'
 
 export async function getServerSideProps() {
@@ -40,6 +40,8 @@ interface ArticlesProps {
 
 const Collection = ({ articleList }: ArticlesProps) => {
   const [isCartOpen, setIsCartOpen] = useState(false)
+  const { points } = useStore()
+
   return (
     <>
       <div className="grid grid-cols-2">
@@ -53,7 +55,7 @@ const Collection = ({ articleList }: ArticlesProps) => {
           onClick={() => setIsCartOpen(!isCartOpen)}
         >
           <div className="bg-ternary text-white w-36 flex p-4 rounded-3xl justify-around ">
-            5/30
+            {points}/30
             <ShoppingIcon className="fill-current" />
           </div>
         </button>

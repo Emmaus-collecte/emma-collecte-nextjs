@@ -3,13 +3,16 @@ import { CartModel } from '../../../models/cart.model'
 import Toaster from '../../../public/illustrations/Toaster02.png'
 import TrashIcon from '../../../public/icons/trash.svg'
 import Image from 'next/image'
+import useStore from '../../../lib/store/useStore'
 
 interface CartItemProps {
   item: CartModel
 }
 const CartItem = ({ item }: CartItemProps) => {
-  const handleDelete = () => {
-    console.log('delte', item)
+  const { deleteCartItem } = useStore()
+
+  const handleDelete = async () => {
+    await deleteCartItem(item)
   }
   return (
     <>
