@@ -2,12 +2,14 @@ import { GetState, SetState } from 'zustand'
 import { State } from './useStore'
 import { CartModel } from '../../models/cart.model'
 import { CollectionInformationModel } from '../../models/collectionInformation.model'
+import { CityModel } from '../../models/city.model'
+import { TimeWindowModel } from '../../models/timeWindow.model'
 
 export interface CollectionSlice {
   collection: {
     cart: Array<CartModel>
     points: number
-    information: CollectionInformationModel
+    information: Object
   }
   setCart: (article: CartModel) => void
   deleteCartItem: (article: CartModel) => void
