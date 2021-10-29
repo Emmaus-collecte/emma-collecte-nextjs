@@ -1,17 +1,17 @@
-import create from "zustand"
+import create from 'zustand'
 
-import  createArticlesSlice, {ArticlesSlice} from "./createArticlesSlice"
-import createCartSlice, {CartSlice} from "./createCartSlice";
-import {devtools} from "zustand/middleware";
+import createArticlesSlice, { ArticlesSlice } from './createArticlesSlice'
+import createCollectionSlice, { CollectionSlice } from './createCollectionSlice'
+import { devtools } from 'zustand/middleware'
 
-export type State = ArticlesSlice & CartSlice;
+export type State = ArticlesSlice & CollectionSlice
 
 // @ts-ignore
 const store = (set, get) => ({
-        ...createArticlesSlice(set, get),
-        ...createCartSlice(set,get)
-});
+  ...createArticlesSlice(set, get),
+  ...createCollectionSlice(set, get),
+})
 
 const useStore = create(devtools(store))
 
-export default useStore;
+export default useStore

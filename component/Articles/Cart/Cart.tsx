@@ -10,7 +10,7 @@ interface CartProps {
 }
 
 const Cart = ({ isCartOpen, closeCart }: CartProps) => {
-  const { cart, points } = useStore()
+  const { cart, points } = useStore((state) => state.collection)
 
   return (
     <div

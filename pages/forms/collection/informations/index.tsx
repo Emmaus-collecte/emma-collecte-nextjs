@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import BackButton from '../../../../component/common/BackButton'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -6,6 +6,8 @@ import { initializeApollo } from '../../../../apollo/client'
 import { gql } from '@apollo/client'
 import { CityModel } from '../../../../models/city.model'
 import { TimeWindowModel } from '../../../../models/timeWindow.model'
+import useStore from '../../../../lib/store/useStore'
+import { CollectionInformationModel } from '../../../../models/collectionInformation.model'
 
 export async function getServerSideProps() {
   const apolloClient = initializeApollo()
@@ -18,6 +20,7 @@ export async function getServerSideProps() {
           cp
         }
         getTimeWindows {
+          id
           startHour
           endHour
         }
@@ -38,7 +41,11 @@ interface InformationsProps {
   timeWindows: Array<TimeWindowModel>
 }
 const Informations = ({ cities, timeWindows }: InformationsProps) => {
-  console.log(cities, timeWindows)
+  const { setCollectionInformation } = useStore((state) => state)
+
+  const [selectedCity, setSelectedCity] = useState({})
+  const [selectedTimeWindow, setSelectedTimeWindow] = useState({})
+
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
@@ -67,9 +74,25 @@ const Informations = ({ cities, timeWindows }: InformationsProps) => {
     },
     validationSchema,
     onSubmit(values) {
-      console.log(values)
+      let copyValues: any = { ...values }
+      copyValues.city = selectedCity
+      copyValues.timeWindow = selectedTimeWindow
+      const collectionInformation: CollectionInformationModel = copyValues
+      setCollectionInformation(collectionInformation)
     },
   })
+
+  const handleSelect = (event: any, field: string) => {
+    const selectValue = event.target.value
+    if (field === 'timeWindow') {
+      const timeWindow = timeWindows.find((tw) => tw.id === selectValue) || {}
+      setSelectedTimeWindow(timeWindow)
+    } else if (field === 'city') {
+      const city = cities.find((c) => c.id === selectValue) || {}
+      setSelectedCity(city)
+    }
+    formik.setFieldValue(field, selectValue)
+  }
   return (
     <div>
       <BackButton name="Retour aux articles" href="/forms/collection" />
@@ -173,6 +196,7 @@ const Informations = ({ cities, timeWindows }: InformationsProps) => {
             <label htmlFor="city">Ville :</label>
             <select
               {...formik.getFieldProps('city')}
+              onChange={(value) => handleSelect(value, 'city')}
               className={`${
                 formik.touched.city && formik.errors.city ? 'input-error' : ''
               }`}
@@ -181,7 +205,7 @@ const Informations = ({ cities, timeWindows }: InformationsProps) => {
                 Sélectionnez une ville
               </option>
               {cities.map((city) => (
-                <option>
+                <option value={city.id} onClick={() => setSelectedCity(city)}>
                   {city.cp} - {city.name}
                 </option>
               ))}
@@ -194,6 +218,7 @@ const Informations = ({ cities, timeWindows }: InformationsProps) => {
             <label htmlFor="timeWindow">Plage horaire :</label>
             <select
               {...formik.getFieldProps('timeWindow')}
+              onChange={(value) => handleSelect(value, 'timeWindow')}
               className={`${
                 formik.touched.timeWindow && formik.errors.timeWindow
                   ? 'input-error'
@@ -204,7 +229,7 @@ const Informations = ({ cities, timeWindows }: InformationsProps) => {
                 Sélectionnez une plage horaire
               </option>
               {timeWindows.map((timeWindow) => (
-                <option>
+                <option value={timeWindow.id}>
                   {timeWindow.startHour} - {timeWindow.endHour}
                 </option>
               ))}
