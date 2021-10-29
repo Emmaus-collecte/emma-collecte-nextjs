@@ -8,6 +8,7 @@ import { CityModel } from '../../../../models/city.model'
 import { TimeWindowModel } from '../../../../models/timeWindow.model'
 import useStore from '../../../../lib/store/useStore'
 import { CollectionInformationModel } from '../../../../models/collectionInformation.model'
+import { useRouter } from 'next/router'
 
 export async function getServerSideProps() {
   const apolloClient = initializeApollo()
@@ -42,6 +43,7 @@ interface InformationsProps {
 }
 const Informations = ({ cities, timeWindows }: InformationsProps) => {
   const { setCollectionInformation } = useStore((state) => state)
+  const router = useRouter()
 
   const [selectedCity, setSelectedCity] = useState({})
   const [selectedTimeWindow, setSelectedTimeWindow] = useState({})
@@ -79,6 +81,7 @@ const Informations = ({ cities, timeWindows }: InformationsProps) => {
       copyValues.timeWindow = selectedTimeWindow
       const collectionInformation: CollectionInformationModel = copyValues
       setCollectionInformation(collectionInformation)
+      router.replace('/forms/collection/confirmation')
     },
   })
 
