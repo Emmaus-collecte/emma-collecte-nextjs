@@ -11,7 +11,7 @@ export interface Props {
 
 const SideBarArticleDetails = ({ article }: Props) => {
   const [quantity, setQuantity] = useState(1)
-  const [option, setOption] = useState(article.options[1])
+  const [option, setOption] = useState(article.options[0])
   const [quality, setQuality] = useState('')
   const [state, setState] = useState([
     {

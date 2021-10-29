@@ -12,7 +12,7 @@ const CartItem = ({ item }: CartItemProps) => {
   const { deleteCartItem } = useStore()
 
   const handleDelete = async () => {
-    await deleteCartItem(item)
+    deleteCartItem(item)
   }
   return (
     <>

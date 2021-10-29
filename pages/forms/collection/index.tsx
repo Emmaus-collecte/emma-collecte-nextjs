@@ -40,7 +40,7 @@ interface ArticlesProps {
 
 const Collection = ({ articleList }: ArticlesProps) => {
   const [isCartOpen, setIsCartOpen] = useState(false)
-  const { points } = useStore()
+  const { points } = useStore((state) => state.collection)
 
   return (
     <>
