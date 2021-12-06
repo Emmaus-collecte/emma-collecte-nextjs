@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ShoppingIcon from '../../../public/icons/shopping.svg'
 import useStore from '../../../lib/store/useStore'
 import CartItem from './CartItem'
@@ -10,8 +10,12 @@ interface CartProps {
 }
 
 const Cart = ({ isCartOpen, closeCart }: CartProps) => {
-  const { cart, points } = useStore((state) => state.collection)
+  const { cart, points } = useStore()
 
+  // console.log(cart)
+  useEffect(() => {
+    console.log(cart)
+  }, [cart])
   return (
     <div
       className={`bg-primary absolute top-0 right-0 h-full w-80 rounded-l-3xl flex flex-col ${

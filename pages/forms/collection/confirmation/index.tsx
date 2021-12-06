@@ -3,7 +3,7 @@ import useStore from '../../../../lib/store/useStore'
 import ConfirmationInformation from '../../../../component/Articles/Confirmation/ConfirmationInformation'
 
 const Confirmation = () => {
-  const { cart, points, information } = useStore((state) => state.collection)
+  const { cart, points, information } = useStore()
   console.log(information)
   // @ts-ignore
   return <ConfirmationInformation information={information} />

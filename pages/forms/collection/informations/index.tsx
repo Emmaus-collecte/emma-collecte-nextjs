@@ -42,7 +42,7 @@ interface InformationsProps {
   timeWindows: Array<TimeWindowModel>
 }
 const Informations = ({ cities, timeWindows }: InformationsProps) => {
-  const { setCollectionInformation } = useStore((state) => state)
+  const { setCollectionInformation } = useStore()
   const router = useRouter()
 
   const [selectedCity, setSelectedCity] = useState({})
