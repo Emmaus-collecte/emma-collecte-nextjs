@@ -61,7 +61,7 @@ const ArticleDetails = ({ article }: ArticleDetailsProps) => {
         </div>
       </div>
       {/*SideBar*/}
-      <div className="bg-primary col-start-4 -my-16 -mr-16 rounded-l-3xl p-6 flex flex-col">
+      <div className="bg-primary col-start-4 -my-16 rounded-l-3xl p-6 flex flex-col fixed h-screen right-0">
         <SideBarArticleDetails article={article} />
       </div>
     </div>
