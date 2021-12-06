@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BackButton from '../../../../component/common/BackButton'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -9,6 +9,7 @@ import { TimeWindowModel } from '../../../../models/timeWindow.model'
 import useStore from '../../../../lib/store/useStore'
 import { CollectionInformationModel } from '../../../../models/collectionInformation.model'
 import { useRouter } from 'next/router'
+import { isEmpty } from '../../../../lib/utils/isEmpty'
 
 export async function getServerSideProps() {
   const apolloClient = initializeApollo()
@@ -42,7 +43,7 @@ interface InformationsProps {
   timeWindows: Array<TimeWindowModel>
 }
 const Informations = ({ cities, timeWindows }: InformationsProps) => {
-  const { setCollectionInformation } = useStore()
+  const { setCollectionInformation, information } = useStore()
   const router = useRouter()
 
   const [selectedCity, setSelectedCity] = useState({})
@@ -50,7 +51,6 @@ const Informations = ({ cities, timeWindows }: InformationsProps) => {
 
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
-
   const validationSchema = Yup.object({
     firstName: Yup.string().required('Le prénom est requis'),
     lastName: Yup.string().required('Le nom est requis'),
@@ -65,14 +65,14 @@ const Informations = ({ cities, timeWindows }: InformationsProps) => {
   })
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      address: '',
-      more: '',
-      city: '',
-      timeWindow: '',
+      firstName: information.firstName || '',
+      lastName: information.lastName || '',
+      email: information.email || '',
+      phone: information.phone || '',
+      address: information.address || '',
+      more: information.more || '',
+      city: information.city.id || '',
+      timeWindow: information.timeWindow.id || '',
     },
     validationSchema,
     onSubmit(values) {
@@ -96,6 +96,12 @@ const Informations = ({ cities, timeWindows }: InformationsProps) => {
     }
     formik.setFieldValue(field, selectValue)
   }
+
+  useEffect(() => {
+    setSelectedCity(information.city)
+    setSelectedTimeWindow(information.timeWindow)
+  }, [information])
+
   return (
     <div>
       <BackButton name="Retour aux articles" href="/forms/collection" />
@@ -245,8 +251,11 @@ const Informations = ({ cities, timeWindows }: InformationsProps) => {
         <div className="py-8 col-start-1 col-end-3 row-start-2">
           <button
             type="submit"
-            className="bg-secondary w-3/4 h-12 rounded-xl flex items-center justify-center m-auto font-bold"
+            className="bg-secondary w-3/4 h-12 rounded-xl flex items-center justify-center m-auto font-bold disabled:opacity-20"
             onClick={() => formik.submitForm()}
+            disabled={
+              !(formik.isValid && (isEmpty(information) ? formik.dirty : true))
+            }
           >
             Confirmer
           </button>

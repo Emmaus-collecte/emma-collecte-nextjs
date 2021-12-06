@@ -8,7 +8,7 @@ import { TimeWindowModel } from '../../models/timeWindow.model'
 export interface CollectionSlice {
   cart: Array<CartModel>
   points: number
-  information: Object
+  information: CollectionInformationModel
   setCart: (article: CartModel) => void
   deleteCartItem: (article: CartModel) => void
   updatePoints: () => void
@@ -17,12 +17,29 @@ export interface CollectionSlice {
 const createCollectionSlice = (set: SetState<State>, get: GetState<State>) => ({
   cart: [],
   points: 0,
-  information: {},
+  information: {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: '',
+    more: '',
+    city: {
+      id: '',
+      name: '',
+      cp: 0,
+    },
+    timeWindow: {
+      id: '',
+      endHour: '',
+      startHour: '',
+    },
+  },
 
   updatePoints: () => {
     set((state) => {
       let tempPoint = 0
-      void state.cart.map((s: CartModel) => {
+      state.cart.map((s: CartModel) => {
         tempPoint += s.price * s.options.quantity * s.quantity
       })
       state.points = tempPoint
@@ -31,8 +48,8 @@ const createCollectionSlice = (set: SetState<State>, get: GetState<State>) => ({
 
   setCart: (article: CartModel) => {
     set((state) => {
-      void state.cart.push(article)
-      void state.updatePoints()
+      state.cart.push(article)
+      state.updatePoints()
     })
   },
 
@@ -42,7 +59,6 @@ const createCollectionSlice = (set: SetState<State>, get: GetState<State>) => ({
         state.cart.findIndex((sa: CartModel) => sa === article),
         1
       )
-      console.log(state.cart)
       state.updatePoints()
     })
   },

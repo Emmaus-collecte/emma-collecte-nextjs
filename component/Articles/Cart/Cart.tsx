@@ -12,13 +12,9 @@ interface CartProps {
 const Cart = ({ isCartOpen, closeCart }: CartProps) => {
   const { cart, points } = useStore()
 
-  // console.log(cart)
-  useEffect(() => {
-    console.log(cart)
-  }, [cart])
   return (
     <div
-      className={`bg-primary absolute top-0 right-0 h-full w-80 rounded-l-3xl flex flex-col ${
+      className={`bg-primary fixed top-0 right-0 h-screen w-80 rounded-l-3xl flex flex-col ${
         isCartOpen ? 'block' : 'hidden'
       }`}
     >
@@ -40,7 +36,7 @@ const Cart = ({ isCartOpen, closeCart }: CartProps) => {
       </div>
       <div>
         {cart.length !== 0 ? (
-          cart.map((cartItem) => <CartItem item={cartItem} />)
+          cart.map((cartItem) => <CartItem item={cartItem} isCart={true} />)
         ) : (
           <p className="m-8 text-white">
             Aucun article dans le panier de donations
@@ -51,7 +47,7 @@ const Cart = ({ isCartOpen, closeCart }: CartProps) => {
       <Link href="/forms/collection/informations/">
         <button
           type="button"
-          disabled={cart.length === 0}
+          disabled={cart.length === 0 || points < 30}
           className="bg-secondary rounded-lg h-20 text-2xl font-bold disabled:opacity-20 m-8"
         >
           Valider mon panier

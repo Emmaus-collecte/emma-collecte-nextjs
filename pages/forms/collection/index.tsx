@@ -42,7 +42,6 @@ const Collection = ({ articleList }: ArticlesProps) => {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const { points } = useStore()
 
-  console.log(points)
   return (
     <>
       <div className="grid grid-cols-2">
